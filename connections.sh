@@ -4,7 +4,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin
 cmd=$(which ss)
 rrdtool=$(which rrdtool)
 db=/opt/rrd/tcp.rrd
-img=/usr/share/nginx/html/boostlayer.net/awp
+img=/usr/share/nginx/html/rrd
 
 if [ ! -e $db ]
 then
@@ -22,7 +22,7 @@ $rrdtool updatev $db -t conns N:`$cmd -s | grep TCP: | cut -d ' ' -f6 | tr -d ',
 for period in hour day week month year
 do
         $rrdtool graph $img/connections-$period.png -s -1$period \
-        -t "BoostLayer ams1 connections - $period" -z \
+        -t "Established TCP connections - $period" -z \
         -c "BACK#FFFFFF" -c "SHADEA#FFFFFF" -c "SHADEB#FFFFFF" \
         -c "MGRID#AAAAAA" -c "GRID#CCCCCC" -c "ARROW#333333" \
         -c "FONT#333333" -c "AXIS#333333" -c "FRAME#333333" \
